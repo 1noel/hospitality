@@ -1,59 +1,16 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @vite('resources/css/app.css')
-</head>
-<body>
- 
-<header>
+@extends('layouts.app')
 
-<div class="bg-cover bg-no-repeat bg-center h-[650px] relative" style="background-image:  url('{{asset('images/mainbg.png')}}')">
-  <!-- Your content here -->
-  <nav class="flex justify-between items-center px-10 py-5">
-    <div>
-      <img src="{{asset('images/logo.png')}}" alt="Logo" class="h-10 w-auto object-contain">
+@section('header-content')
+    <div class="mx-20 absolute bottom-24">
+        <h1 class="font-Inter text-white font-bold text-2xl">Discover Extraordinary <br>
+        Comfort in Hotels</h1>
     </div>
-
-    <ul class="flex justify-center items-center space-x-10">
-      <li>
-        <a href="#">Home</a>
-      </li>
-      <li>
-        <a href="#">About</a>
-      </li>
-      <li>
-        <a href="#">Products</a>
-      </li>
-      <li>
-        <a href="#">Services</a>
-      </li>
-      <li>
-        <a href="#">Pricing</a>
-      </li>
-      <div>
-        <button class="bg-closeryellow text-white px-8 py-2 rounded-lg">Login</button>
-      </div>
-    </ul>
-  </nav>
-
-  <div class="mx-20 absolute bottom-24">
-    <h1 class="font-Inter text-white font-bold text-2xl">Discover Extraordinary <br>
-    Comfort in Hotels</h1>
-  </div>
-</div>
-
-
-</header>
+@endsection
 
 
 
 
-
-
-<main class="">
-
+@section('content')
 <!-- resever section-->
 <section class="my-14">
   <div class="md:my-10 md:mx-20 m-5">
@@ -217,9 +174,10 @@
  </div>
 
  <!-- how we works -->
- <div class="my-10 flex ">
-    <div class="relative bg-cover  md:h-[500px] bg-no-repeat w-full md:w-[85%] p-8 md:p-16 " style="background-image: url('{{asset('images/howbg.png')}}')">
-        <!-- Circular Image -->
+ <div class="my-10 flex ">    
+<div class="relative bg-cover md:h-[500px] bg-no-repeat w-full md:w-[85%] p-8 md:p-16" style="background-image: url('{{asset('images/howbg.png')}}');">
+    
+<!-- Circular Image -->
         <img 
             src="{{asset('images/howimg.jpeg')}}" 
             alt="Featured Image" 
@@ -275,6 +233,7 @@
                 </div>
             </div>
         </div>
+</div>
     </div>
 </div>
 
@@ -365,76 +324,5 @@
 
 </div>
 
-</main>
+@endsection
 
-
-<!-- footer -->
-
-<footer class="bg-footerbg p-5 font-Inter">
-  <div class="container mx-auto flex flex-col md:flex-row justify-between items-center my-20">
-    <div class="md:w-[40%]">
-      <p class="text-white text-2xl font-medium">Newsletter & Special Promo</p>
-
-      <form action="" class="mt-5">
-        <div class="flex ">
-            <input  class="rounded-l-lg px-5 focus:outline-none italic" type="text" name="" placeholder="Enter your email here" required>
-            <button type="submit" class="bg-closeryellow text-white px-5 py-3 rounded-r-lg">Subscribe</button>
-        </div>
-      </form>
-
-    </div>
-
-    <div class="md:w-[20%]">
-      <ul class="space-y-3">
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >About us</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Contact</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Location</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="md:w-[20%]">
-    <ul class="space-y-3">
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >FAQ</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Term of Use</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Privacy Police</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="md:w-[20%]">
-    <ul class="space-y-3">
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Services & Facilities</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >Careers</a>
-        </li>
-        <li>
-            <a href="#" class="text-white text-base font-nomarl" >How to book</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-
-    <div class="mt-5">
-      <hr class="mx-auto h-0.5 w-[30%] bg-gray-700">
-      <p class="text-center text-white text-base my-2">&copy Copyright Booking Hotels. All right reserved.</p>
-    </div>
-
-</footer>
-
-
-</body>
-</html>
