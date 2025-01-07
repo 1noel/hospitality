@@ -21,6 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'status',
+        'phone_number',
+        'province',
+        'district',
+        'sector',
+        'cell',
+        'village',
+
     ];
 
     /**
@@ -44,5 +53,9 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function businesses()
+    {
+        return $this->hasMany(Business::class);
     }
 }

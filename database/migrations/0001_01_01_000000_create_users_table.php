@@ -17,6 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['customer', 'trader', 'employee']);
+            $table->enum('status', ['active', 'inactive', 'sleep'])->default('active');
+            $table->string('phone_number')->nullable();
+            $table->string('country')->default('Rwanda');
+            $table->string('province');
+            $table->string('district');
+            $table->string('sector');
+            $table->string('cell');
+            $table->string('village');
             $table->rememberToken();
             $table->timestamps();
         });
