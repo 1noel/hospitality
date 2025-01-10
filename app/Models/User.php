@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role',
         'status',
         'phone_number',
+        'country',
         'province',
         'district',
         'sector',
