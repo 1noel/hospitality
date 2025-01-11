@@ -57,20 +57,13 @@
             placeholder="Enter your phone number" />
         <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
     </div>
-
- <!-- Location Fields -->
+<!-- Location Fields -->
 <div class="grid grid-cols-2 gap-4">
     <div class="space-y-2">
         <x-input-label for="country" :value="__('Country')" class="text-gray-700 font-semibold"/>
         <select id="country" name="country" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
-            <option value="">Select Country</option>
             <option value="rwanda">Rwanda</option>
-            <option value="kenya">Kenya</option>
-            <option value="uganda">Uganda</option>
-            <option value="tanzania">Tanzania</option>
-            <option value="burundi">Burundi</option>
         </select>
-        <x-input-error :messages="$errors->get('country')" class="mt-2" />
     </div>
 
     <div class="space-y-2">
@@ -78,10 +71,8 @@
         <select id="province" name="province" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
             <option value="">Select Province</option>
         </select>
-        <x-input-error :messages="$errors->get('province')" class="mt-2" />
     </div>
 </div>
-
 
 <div class="grid grid-cols-2 gap-4">
     <div class="space-y-2">
@@ -89,7 +80,6 @@
         <select id="district" name="district" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
             <option value="">Select District</option>
         </select>
-        <x-input-error :messages="$errors->get('district')" class="mt-2" />
     </div>
 
     <div class="space-y-2">
@@ -97,7 +87,6 @@
         <select id="sector" name="sector" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
             <option value="">Select Sector</option>
         </select>
-        <x-input-error :messages="$errors->get('sector')" class="mt-2" />
     </div>
 </div>
 
@@ -107,7 +96,6 @@
         <select id="cell" name="cell" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
             <option value="">Select Cell</option>
         </select>
-        <x-input-error :messages="$errors->get('cell')" class="mt-2" />
     </div>
 
     <div class="space-y-2">
@@ -115,9 +103,9 @@
         <select id="village" name="village" class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-closeryellow focus:border-closeryellow transition-colors" required>
             <option value="">Select Village</option>
         </select>
-        <x-input-error :messages="$errors->get('village')" class="mt-2" />
     </div>
 </div>
+
 
 
     <!-- Password -->
@@ -156,153 +144,222 @@
 
         </div>
     </div>
+    
 
     <script>
-        const locationData = {
-    rwanda: {
-        provinces: {
-            'kigali': {
-                districts: {
-                    'nyarugenge': {
-                        sectors: ['gitega', 'kanyinya', 'kimisagara'],
-                        cells: {
-                            'gitega': ['villages'],
-                            'kanyinya': ['villages'],
-                            'kimisagara': ['villages']
-                        }
-                    },
-                    'gasabo': {
-                        sectors: ['gisozi', 'kimihurura', 'kimironko'],
-                        cells: {
-                            'gisozi': ['villages'],
-                            'kimihurura': ['villages'],
-                            'kimironko': ['villages']
-                        }
-                    }
-                }
-            },
-            'eastern': {
-                districts: {
-                    'bugesera': {
-                        sectors: ['nyamata', 'rilima', 'mayange'],
-                        cells: {
-                            'nyamata': ['villages'],
-                            'rilima': ['villages'],
-                            'mayange': ['villages']
-                        }
-                    }
-                }
-            }
-        }
-    },
-    // Add other countries with similar structure
-};
 
-document.addEventListener('DOMContentLoaded', function() {
-    const countrySelect = document.getElementById('country');
-    const provinceSelect = document.getElementById('province');
-    
-    countrySelect.addEventListener('change', function() {
-        const selectedCountry = this.value;
-        updateProvinces(selectedCountry);
+
+const loadingSpinnerCSS = `
+    <style>
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #FFB800;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+`;
+document.head.insertAdjacentHTML('beforeend', loadingSpinnerCSS);
+const apiEndpoint = 'https://rwanda.p.rapidapi.com/';
+const apiKey = '6ff5880620mshfe20bd504d82c14p16f786jsn4741c513ceda'; // Replace with your actual API key
+
+async function fetchLocations(endpoint) {
+    const response = await fetch(`${apiEndpoint}${endpoint}`, {
+        headers: {
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'rwanda.p.rapidapi.com'
+        }
     });
+    return await response.json();
+}
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    // Add loading spinner CSS
+    const loadingSpinnerCSS = `
+        <style>
+            .loading-spinner {
+                width: 20px;
+                height: 20px;
+                border: 2px solid #f3f3f3;
+                border-top: 2px solid #FFB800;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin-left: 10px;
+                display: inline-block;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    `;
+    document.head.insertAdjacentHTML('beforeend', loadingSpinnerCSS);
+
+    try {
+        const response = await fetchLocations('provinces');
+        const provinceSelect = document.getElementById('province');
+        provinceSelect.innerHTML = '<option value="">Select Province</option>';
+        
+        if (response.status === "success" && response.data) {
+            response.data.forEach(province => {
+                provinceSelect.add(new Option(province, province));
+            });
+            
+            // Initialize Select2 for province
+            $(provinceSelect).select2({
+                placeholder: 'Search province...',
+                allowClear: true,
+                width: '100%',
+                theme: "classic"
+            });
+        }
+
+        // Province change handler
+        provinceSelect.addEventListener('change', async (e) => {
+            const districtSelect = document.getElementById('district');
+            districtSelect.innerHTML = '<option value="">Loading districts...</option>';
+            districtSelect.disabled = true;
+            
+            const spinner = document.createElement('div');
+            spinner.className = 'loading-spinner';
+            districtSelect.parentNode.appendChild(spinner);
+
+            try {
+                const response = await fetchLocations('districts');
+                districtSelect.innerHTML = '<option value="">Select District</option>';
+                
+                if (response.status === "success" && response.data) {
+                    response.data.forEach(district => {
+                        districtSelect.add(new Option(district, district));
+                    });
+                    
+                    // Initialize Select2 for district
+                    $(districtSelect).select2({
+                        placeholder: 'Search district...',
+                        allowClear: true,
+                        width: '100%',
+                        theme: "classic"
+                    });
+                }
+            } catch (error) {
+                console.log('Error fetching districts:', error);
+                districtSelect.innerHTML = '<option value="">Error loading districts</option>';
+            } finally {
+                districtSelect.disabled = false;
+                spinner.remove();
+            }
+        });
+    } catch (error) {
+        console.log('Error fetching provinces:', error);
+    }
 });
 
-function updateProvinces(country) {
-    const provinceSelect = document.getElementById('province');
-    provinceSelect.innerHTML = '<option value="">Select Province</option>';
-    
-    if (country && locationData[country]) {
-        Object.keys(locationData[country].provinces).forEach(province => {
-            const option = document.createElement('option');
-            option.value = province;
-            option.textContent = province.charAt(0).toUpperCase() + province.slice(1);
-            provinceSelect.appendChild(option);
-        });
-    }
-}
-function updateDistricts(country, province) {
-    const districtSelect = document.getElementById('district');
-    districtSelect.innerHTML = '<option value="">Select District</option>';
-    
-    if (country && province && locationData[country].provinces[province]) {
-        Object.keys(locationData[country].provinces[province].districts).forEach(district => {
-            const option = document.createElement('option');
-            option.value = district;
-            option.textContent = district.charAt(0).toUpperCase() + district.slice(1);
-            districtSelect.appendChild(option);
-        });
-    }
-}
-
-function updateSectors(country, province, district) {
+// District change handler with  search and loading state
+document.getElementById('district').addEventListener('change', async (e) => {
     const sectorSelect = document.getElementById('sector');
-    sectorSelect.innerHTML = '<option value="">Select Sector</option>';
+    sectorSelect.innerHTML = '<option value="">Loading sectors...</option>';
+    sectorSelect.disabled = true;
     
-    if (country && province && district && locationData[country].provinces[province].districts[district]) {
-        locationData[country].provinces[province].districts[district].sectors.forEach(sector => {
-            const option = document.createElement('option');
-            option.value = sector;
-            option.textContent = sector.charAt(0).toUpperCase() + sector.slice(1);
-            sectorSelect.appendChild(option);
-        });
-    }
-}
-
-function updateCells(country, province, district, sector) {
-    const cellSelect = document.getElementById('cell');
-    cellSelect.innerHTML = '<option value="">Select Cell</option>';
+    // Add loading spinner
+    const spinner = document.createElement('div');
+    spinner.className = 'loading-spinner';
+    sectorSelect.parentNode.appendChild(spinner);
     
-    if (country && province && district && sector) {
-        Object.keys(locationData[country].provinces[province].districts[district].cells[sector]).forEach(cell => {
-            const option = document.createElement('option');
-            option.value = cell;
-            option.textContent = cell.charAt(0).toUpperCase() + cell.slice(1);
-            cellSelect.appendChild(option);
-        });
-    }
-}
+    try {
+        const response = await fetchLocations('sectors');
+        if (response.status === "success" && response.data) {
+            sectorSelect.innerHTML = '<option value="">Select Sector</option>';
+            response.data.slice(0, 40).forEach(sector => {
+                sectorSelect.add(new Option(sector, sector));
+            });
 
-function updateVillages(country, province, district, sector, cell) {
+            $(sectorSelect).select2({
+                placeholder: 'Search sector...',
+                data: response.data.map(sector => ({
+                    id: sector,
+                    text: sector
+                })),
+                allowClear: true,
+                minimumInputLength: 1,
+                width: '100%',
+                theme: "classic"
+            });
+        }
+    } catch (error) {
+        console.log('Error fetching sectors:', error);
+        sectorSelect.innerHTML = '<option value="">Error loading sectors</option>';
+    } finally {
+        sectorSelect.disabled = false;
+        spinner.remove();
+    }
+});
+
+// Sector change handler
+document.getElementById('sector').addEventListener('change', async (e) => {
+    try {
+        const response = await fetchLocations('cells');
+        const cellSelect = document.getElementById('cell');
+        cellSelect.innerHTML = '<option value="">Select Cell</option>';
+        
+        if (response.status === "success" && response.data) {
+            response.data.forEach(cell => {
+                cellSelect.add(new Option(cell, cell));
+            });
+        }
+    } catch (error) {
+        console.log('Error fetching cells:', error);
+    }
+});
+
+// Cell change handler with optimized loading and search
+document.getElementById('cell').addEventListener('change', async (e) => {
     const villageSelect = document.getElementById('village');
     villageSelect.innerHTML = '<option value="">Select Village</option>';
     
-    if (country && province && district && sector && cell) {
-        locationData[country].provinces[province].districts[district].cells[sector][cell].forEach(village => {
-            const option = document.createElement('option');
-            option.value = village;
-            option.textContent = village.charAt(0).toUpperCase() + village.slice(1);
-            villageSelect.appendChild(option);
-        });
+    try {
+        const response = await fetchLocations('villages');
+        if (response.status === "success" && response.data) {
+            const allVillages = response.data;
+            
+            // Load first 40 villages initially
+            allVillages.slice(0, 1).forEach(village => {
+                villageSelect.add(new Option(village, village));
+            });
+
+            // Initialize Select2 with all villages data
+            $(villageSelect).select2({
+                placeholder: 'Search village...',
+                data: allVillages.map(village => ({
+                    id: village,
+                    text: village
+                })),
+                allowClear: true,
+                minimumInputLength: 1,
+                width: '100%',
+                theme: "classic",
+                templateResult: formatVillage
+            });
+        }
+    } catch (error) {
+        console.log('Error fetching villages:', error);
     }
+});
+
+// Custom formatting for village options
+function formatVillage(village) {
+    if (!village.id) return village.text;
+    return $('<span>' + village.text + '</span>');
 }
-
-// Add event listeners for all selects
-document.getElementById('province').addEventListener('change', function() {
-    const country = document.getElementById('country').value;
-    updateDistricts(country, this.value);
-});
-
-document.getElementById('district').addEventListener('change', function() {
-    const country = document.getElementById('country').value;
-    const province = document.getElementById('province').value;
-    updateSectors(country, province, this.value);
-});
-
-document.getElementById('sector').addEventListener('change', function() {
-    const country = document.getElementById('country').value;
-    const province = document.getElementById('province').value;
-    const district = document.getElementById('district').value;
-    updateCells(country, province, district, this.value);
-});
-
-document.getElementById('cell').addEventListener('change', function() {
-    const country = document.getElementById('country').value;
-    const province = document.getElementById('province').value;
-    const district = document.getElementById('district').value;
-    const sector = document.getElementById('sector').value;
-    updateVillages(country, province, district, sector, this.value);
-});
 
     </script>
 @endsection
