@@ -29,6 +29,7 @@ return new class extends Migration
                 $table->string('sector');
                 $table->string('cell');
                 $table->string('village');
+                $table->enum('status', ['active', 'inactive', 'banned'])->default('active');
                 $table->timestamps();
             });
         }
