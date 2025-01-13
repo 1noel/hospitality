@@ -33,18 +33,36 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone_number' => ['required', 'string', 'max:15'],
+            'country' => ['required', 'string'],
+            'province' => ['required', 'string'],
+            'district' => ['required', 'string'],
+            'sector' => ['required', 'string'],
+            'cell' => ['required', 'string'],
+            'village' => ['required', 'string'],
         ]);
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone_number' => $request->phone_number,
+            'country' => $request->country,
+            'province' => $request->province,
+            'district' => $request->district,
+            'sector' => $request->sector,
+            'cell' => $request->cell,
+            'village' => $request->village,
+            'role' => 'trader',
+            'status' => 'active',
         ]);
-
+    
         event(new Registered($user));
-
+    
         Auth::login($user);
-
+    
         return redirect(route('dashboard', absolute: false));
     }
+    
 }
+ 
