@@ -4,8 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }} - Dashboard</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>{{ config('app.name', 'Hospitality') }} - Dashboard</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/config.js'])
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
@@ -29,5 +31,7 @@
             </main>
         </div>
     </div>
+        <!-- Scripts Stack -->
+        @stack('scripts')
 </body>
 </html>

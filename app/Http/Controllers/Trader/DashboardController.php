@@ -14,6 +14,6 @@ class DashboardController extends Controller
         $totalViews = auth()->user()->businesses()->sum('views');
         $businesses = auth()->user()->businesses()->latest()->get();
 
-        return view('dashboard', compact('totalBusinesses', 'activeListings', 'totalViews', 'businesses'));
+        return view('trader.all.dashboard', compact('totalBusinesses', 'activeListings', 'totalViews', 'businesses'));
     }
 }

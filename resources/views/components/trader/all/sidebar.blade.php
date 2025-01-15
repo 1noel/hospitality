@@ -56,7 +56,7 @@
             <x-dropdown align="right" width="48">
                 <x-slot name="trigger">
                     <button class="flex items-center w-full text-left">
-                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/default-avatar.png') }}" 
+                        <img src="{{ Auth::user()->profile_photo_url ?? asset('images/profile/default-avatar.png') }}" 
                              alt="{{ Auth::user()->name }}" 
                              class="h-8 w-8 rounded-full object-cover">
                         <div class="ml-3">

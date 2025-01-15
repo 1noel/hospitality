@@ -26,13 +26,23 @@ class Business extends Model
         ];
     
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+        public function transactions()
+        {
+            return $this->hasMany(Transaction::class);
+        }
+        
+        public function bookings()
+        {
+            return $this->hasMany(Booking::class);
+        }
+        
+        public function products()
+        {
+            return $this->hasMany(Product::class);
+        }
+        
+        public function employees()
+        {
+            return $this->hasMany(Employee::class);
+        }
 }
