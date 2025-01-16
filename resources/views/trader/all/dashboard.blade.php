@@ -28,7 +28,7 @@
     <!-- Business Listings -->
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6">
-            <h3 class="text-xl font-semibold mb-4">Your Businesses</h3>
+            <h3 class="text-xl font-semibold mb-4">My Businesses</h3>
             @if(isset($businesses) && $businesses->count() > 0)
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($businesses as $business)

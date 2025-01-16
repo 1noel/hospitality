@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('beverages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('business_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->text('description');
             $table->decimal('price', 10, 2);
-            $table->string('sku')->unique();
-            $table->integer('stock_quantity')->default(0);
-            $table->string('brand')->nullable();
-            $table->string('category');
-            $table->json('specifications')->nullable();
-            $table->json('variants')->nullable();
-            $table->decimal('weight', 8, 2)->nullable();
-            $table->string('unit')->nullable();
+            $table->string('category'); // soft drinks, cocktails, wine, beer
+            $table->integer('volume')->comment('in ml');
+            $table->decimal('alcohol_content', 4, 2)->nullable();
+            $table->json('ingredients')->nullable();
+            $table->boolean('hot')->default(false);
             $table->boolean('featured')->default(false);
             $table->boolean('availability')->default(true);
             $table->string('image1');
@@ -40,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('beverages');
     }
 };

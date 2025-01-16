@@ -39,7 +39,7 @@
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-3">
                     <span class="text-sm text-gray-700 dark:text-gray-300">{{ auth()->user()->name }}</span>
-                    <img src="{{ auth()->user()->profile_photo_url }}" class="h-8 w-8 rounded-full">
+                    <img src="{{ Auth::user()->profile_photo_url ?? asset('images/profile/default-avatar.png') }}" class="h-8 w-8 rounded-full">
                 </button>
 
                 <div x-show="open" 

@@ -18,8 +18,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth','verified', 'role:trader'])->prefix('trader')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Trader\DashboardController::class, 'index'])->name('trader.dashboard');
     Route::resource('business', App\Http\Controllers\Trader\BusinessController::class);
-    Route::resource('products', App\Http\Controllers\Trader\ProductController::class);
-    Route::resource('orders', App\Http\Controllers\Trader\OrderController::class);
     Route::get('/profile', [App\Http\Controllers\Trader\ProfileController::class, 'edit'])->name('trader.profile.edit');
     Route::patch('/profile', [App\Http\Controllers\Trader\ProfileController::class, 'update'])->name('trader.profile.update');
 
@@ -33,12 +31,17 @@ Route::put('/businesses/{business}', [App\Http\Controllers\Trader\BusinessContro
 
 Route::prefix('business/{business}')->group(function () {
     Route::get('/', [App\Http\Controllers\Trader\BusinessController::class, 'dashboard'])->name('business.dashboard');
-    Route::get('/products', [App\Http\Controllers\Trader\BusinessController::class, 'products'])->name('business.products');
+    Route::get('/products', [App\Http\Controllers\Trader\ProductController::class, 'index'])->name('business.products');
+    Route::resource('orders', App\Http\Controllers\Trader\OrderController::class);
     Route::get('/bookings', [App\Http\Controllers\Trader\BusinessController::class, 'bookings'])->name('business.bookings');
     Route::get('/employees', [App\Http\Controllers\Trader\BusinessController::class, 'employees'])->name('business.employees');
     Route::get('/transactions', [App\Http\Controllers\Trader\BusinessController::class, 'transactions'])->name('business.transactions');
     Route::get('/settings', [App\Http\Controllers\Trader\BusinessController::class, 'settings'])->name('business.settings');
+
+    // post business
+    Route::post('/products', [App\Http\Controllers\Trader\ProductController::class, 'store']);
 });
+
 
 
 });
