@@ -5,37 +5,37 @@
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Products & Services</h2>
             <button onclick="openCreateModal()" class="bg-closeryellow hover:bg-closeryellow/90 text-white px-4 py-2 rounded-lg">
-                Add New Product
+                Add New beverage
             </button>
         </div>
 
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @forelse($products as $product)
+            @forelse($beverages as $beverage)
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                <img src="{{ asset('storage/' . $product->image1) }}" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="{{ asset('storage/' . $beverage->image1) }}" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-4">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-semibold text-gray-800 dark:text-white">{{ $product->name }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $product->category }}</p>
+                            <h3 class="font-semibold text-gray-800 dark:text-white">{{ $beverage->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $beverage->category }}</p>
                         </div>
-                        <span class="text-lg font-bold text-closeryellow">${{ $product->price }}</span>
+                        <span class="text-lg font-bold text-closeryellow">${{ $beverage->price }}</span>
                     </div>
-                    <p class="mt-2 text-gray-600 dark:text-gray-300">{{ Str::limit($product->description, 100) }}</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">{{ Str::limit($beverage->description, 100) }}</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="px-2 py-1 text-xs rounded-full {{ $product->availability === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                            {{ ucfirst($product->availability) }}
+                        <span class="px-2 py-1 text-xs rounded-full {{ $beverage->availability === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            {{ ucfirst($beverage->availability) }}
                         </span>
                         <div class="space-x-2">
-                            <button onclick="editProduct(`{{ $product->id }}`)" class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button onclick="deleteProduct(`{{ $product->id }}`)" class="text-red-500 hover:text-red-700">Delete</button>
+                            <button onclick="editBeverage(`{{ $beverage->id }}`)" class="text-blue-500 hover:text-blue-700">Edit</button>
+                            <button onclick="deleteBeverage(`{{ $beverage->id }}`)" class="text-red-500 hover:text-red-700">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
             @empty
-            <p class="text-gray-500 dark:text-gray-400">No products found.</p>
+            <p class="text-gray-500 dark:text-gray-400">No beverages found.</p>
             @endforelse
         </div>
 
@@ -43,7 +43,7 @@
         <div id="createProductModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full">
     <div class="relative top-20 mx-auto p-5 border w-[600px] shadow-lg rounded-md bg-white dark:bg-gray-800">
         <div class="mt-3">
-            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Add New Product</h3>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Add New beverage</h3>
             <form id="createProductForm" class="space-y-4">
     <!-- Basic Information -->
     <div class="grid grid-cols-2 gap-4">

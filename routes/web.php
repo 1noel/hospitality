@@ -32,6 +32,10 @@ Route::put('/businesses/{business}', [App\Http\Controllers\Trader\BusinessContro
 Route::prefix('business/{business}')->group(function () {
     Route::get('/', [App\Http\Controllers\Trader\BusinessController::class, 'dashboard'])->name('business.dashboard');
     Route::get('/products', [App\Http\Controllers\Trader\ProductController::class, 'index'])->name('business.products');
+  
+    Route::get('/services', [App\Http\Controllers\Trader\ServiceController::class, 'index'])->name('business.services');
+    Route::get('/beverages', [App\Http\Controllers\Trader\BeverageController::class, 'index'])->name('business.beverages');
+    Route::get('/menu-items', [App\Http\Controllers\Trader\MenuItemController::class, 'index'])->name('business.menuItem');
     Route::resource('orders', App\Http\Controllers\Trader\OrderController::class);
     Route::get('/bookings', [App\Http\Controllers\Trader\BusinessController::class, 'bookings'])->name('business.bookings');
     Route::get('/employees', [App\Http\Controllers\Trader\BusinessController::class, 'employees'])->name('business.employees');
@@ -40,6 +44,7 @@ Route::prefix('business/{business}')->group(function () {
 
     // post business
     Route::post('/products', [App\Http\Controllers\Trader\ProductController::class, 'store']);
+    Route::post('/service', [App\Http\Controllers\Trader\ServiceController::class, 'store']);
 });
 
 

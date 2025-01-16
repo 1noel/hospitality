@@ -5,37 +5,37 @@
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white">Products & Services</h2>
             <button onclick="openCreateModal()" class="bg-closeryellow hover:bg-closeryellow/90 text-white px-4 py-2 rounded-lg">
-                Add New Product
+                Add New Menu Item
             </button>
         </div>
 
         <!-- Products Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @forelse($products as $product)
+            @forelse($menuItems as $menuItem)
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-                <img src="{{ asset('storage/' . $product->image1) }}" class="w-full h-48 object-cover rounded-t-lg">
+                <img src="{{ asset('storage/' . $menuItem->image1) }}" class="w-full h-48 object-cover rounded-t-lg">
                 <div class="p-4">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-semibold text-gray-800 dark:text-white">{{ $product->name }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $product->category }}</p>
+                            <h3 class="font-semibold text-gray-800 dark:text-white">{{ $menuItem->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $menuItem->category }}</p>
                         </div>
-                        <span class="text-lg font-bold text-closeryellow">${{ $product->price }}</span>
+                        <span class="text-lg font-bold text-closeryellow">${{ $menuItem->price }}</span>
                     </div>
-                    <p class="mt-2 text-gray-600 dark:text-gray-300">{{ Str::limit($product->description, 100) }}</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">{{ Str::limit($menuItem->description, 100) }}</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <span class="px-2 py-1 text-xs rounded-full {{ $product->availability === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                            {{ ucfirst($product->availability) }}
+                        <span class="px-2 py-1 text-xs rounded-full {{ $menuItem->availability === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            {{ ucfirst($menuItem->availability) }}
                         </span>
                         <div class="space-x-2">
-                            <button onclick="editProduct(`{{ $product->id }}`)" class="text-blue-500 hover:text-blue-700">Edit</button>
-                            <button onclick="deleteProduct(`{{ $product->id }}`)" class="text-red-500 hover:text-red-700">Delete</button>
+                            <button onclick="editMenuItem(`{{ $menuItem->id }}`)" class="text-blue-500 hover:text-blue-700">Edit</button>
+                            <button onclick="deleteMenuItem(`{{ $menuItem->id }}`)" class="text-red-500 hover:text-red-700">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
             @empty
-            <p class="text-gray-500 dark:text-gray-400">No products found.</p>
+            <p class="text-gray-500 dark:text-gray-400">No Menu Items found.</p>
             @endforelse
         </div>
 

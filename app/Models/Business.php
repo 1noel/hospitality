@@ -41,6 +41,21 @@ class Business extends Model
             return $this->hasMany(Product::class);
         }
         
+        public function services()
+        {
+            return $this->hasMany(Service::class);
+        }
+        
+        public function beverages()
+        {
+            return $this->hasMany(Beverage::class);
+        }
+        
+        public function menuItems()
+        {
+            return $this->hasMany(MenuItem::class);
+        }
+        
         public function employees()
         {
             return $this->hasMany(Employee::class);
